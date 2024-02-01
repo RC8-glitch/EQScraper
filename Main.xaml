@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Main" VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="1244,10079" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:uasa="clr-namespace:UiPath.Activities.System.Arrays;assembly=UiPath.System.Activities" xmlns:ue="clr-namespace:UiPath.Excel;assembly=UiPath.Excel.Activities" xmlns:ueab="clr-namespace:UiPath.Excel.Activities.Business;assembly=UiPath.Excel.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uix="http://schemas.uipath.com/workflow/activities/uix" xmlns:um="clr-namespace:UiPath.Mail;assembly=UiPath.Mail.Activities" xmlns:umab="clr-namespace:UiPath.Mail.Activities.Business;assembly=UiPath.Mail.Activities" xmlns:umabh="clr-namespace:UiPath.Mail.Activities.Business.HtmlEditor;assembly=UiPath.Mail.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="1244,10079" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:uasa="clr-namespace:UiPath.Activities.System.Arrays;assembly=UiPath.System.Activities" xmlns:ue="clr-namespace:UiPath.Excel;assembly=UiPath.Excel.Activities" xmlns:ueab="clr-namespace:UiPath.Excel.Activities.Business;assembly=UiPath.Excel.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uix="http://schemas.uipath.com/workflow/activities/uix" xmlns:um="clr-namespace:UiPath.Mail;assembly=UiPath.Mail.Activities" xmlns:umab="clr-namespace:UiPath.Mail.Activities.Business;assembly=UiPath.Mail.Activities" xmlns:umabh="clr-namespace:UiPath.Mail.Activities.Business.HtmlEditor;assembly=UiPath.Mail.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
       <x:String>System.Activities</x:String>
@@ -133,7 +133,6 @@
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Default="https://www.equibase.com/static/entry/index.html?SAP=TN" Name="theUrl" />
       <Variable x:TypeArguments="sd:DataTable" Default="[New System.Data.DataTable]" Name="ExtractDataTable" />
-      <Variable x:TypeArguments="ui:Browser" Name="TheBrowser" />
       <Variable x:TypeArguments="x:String" Name="TheDay" />
       <Variable x:TypeArguments="x:String" Name="ErrorMessage" />
       <Variable x:TypeArguments="x:String" Name="TrackRefreshed" />
@@ -201,8 +200,6 @@
                       <Variable x:TypeArguments="x:String" Name="SurfaceString" />
                       <Variable x:TypeArguments="scg:List(x:Int32)" Default="[new List(Of Int32)]" Name="UnbettableCount" />
                       <Variable x:TypeArguments="x:String" Name="UnbettableRaces" />
-                      <Variable x:TypeArguments="s:DateTime" Name="ConvertedTime" />
-                      <Variable x:TypeArguments="x:String" Name="TimeFormat" />
                     </Sequence.Variables>
                     <sap:WorkflowViewStateService.ViewState>
                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -290,7 +287,7 @@
                       </Assign.Value>
                     </Assign>
                     <ui:UpdateRowItem ColumnIndex="{x:Null}" ColumnName="Start Time" DisplayName="Update Start Time column for this track" sap:VirtualizedContainerService.HintSize="1000,192" sap2010:WorkflowViewState.IdRef="UpdateRowItem_2" Row="[CurrentRow]" Value="[StartTime]" />
-                    <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[RaceTable]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="1000,1265" sap2010:WorkflowViewState.IdRef="ForEachRow_3">
+                    <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[RaceTable]" DisplayName="For Each Row  - Checking for unbettable or turf races" sap:VirtualizedContainerService.HintSize="1000,1265" sap2010:WorkflowViewState.IdRef="ForEachRow_3">
                       <ui:ForEachRow.Body>
                         <ActivityAction x:TypeArguments="sd:DataRow">
                           <ActivityAction.Argument>
@@ -310,7 +307,7 @@
                                 <InArgument x:TypeArguments="x:Int32">[RaceCounter + 1]</InArgument>
                               </Assign.Value>
                             </Assign>
-                            <If Condition="[RaceRow.ItemArray.Contains(&quot;250 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;330 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;770 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;350 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;700 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;400 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;300 Y&quot;) OR RaceRow.Item(&quot;Race Type&quot;).ToString.Contains(&quot;Trials&quot;) OR RaceRow.Item(&quot;Surface&quot;).ToString.Contains(&quot;Hurdle&quot;) OR RaceRow.ItemArray.Contains(&quot;220 Y&quot;)]" DisplayName="If race is unbettable" sap:VirtualizedContainerService.HintSize="434,468" sap2010:WorkflowViewState.IdRef="If_2">
+                            <If Condition="[RaceRow.ItemArray.Contains(&quot;250 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;330 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;770 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;350 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;700 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;400 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;300 Y&quot;) OR RaceRow.Item(&quot;Race Type&quot;).ToString.Contains(&quot;Trials&quot;) OR RaceRow.Item(&quot;Surface&quot;).ToString.Contains(&quot;Hurdle&quot;) OR RaceRow.ItemArray.Contains(&quot;220 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;870 Y&quot;)]" DisplayName="If race is unbettable" sap:VirtualizedContainerService.HintSize="434,468" sap2010:WorkflowViewState.IdRef="If_2">
                               <If.Then>
                                 <Sequence sap:VirtualizedContainerService.HintSize="376,286" sap2010:WorkflowViewState.IdRef="Sequence_28">
                                   <sap:WorkflowViewStateService.ViewState>
@@ -465,9 +462,6 @@
                             <DelegateInArgument x:TypeArguments="ue:IWorkbookQuickHandle" Name="Excel" />
                           </ActivityAction.Argument>
                           <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="668,1992" sap2010:WorkflowViewState.IdRef="Sequence_12">
-                            <Sequence.Variables>
-                              <Variable x:TypeArguments="x:String" Name="CurrentDate" />
-                            </Sequence.Variables>
                             <sap:WorkflowViewStateService.ViewState>
                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -547,7 +541,7 @@
                                         <scg:List x:TypeArguments="InArgument(x:String)" Capacity="0" />
                                       </umab:SendMailX.Files>
                                       <umab:SendMailX.HtmlBodyFromFile>
-                                        <umabh:HtmlContentArgument FilePath=".data/HtmlContent0.html">
+                                        <umabh:HtmlContentArgument HtmlBody="{x:Null}" FilePath=".data/HtmlContent0.html">
                                           <umabh:HtmlContentArgument.RuntimeImages>
                                             <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
                                           </umabh:HtmlContentArgument.RuntimeImages>
