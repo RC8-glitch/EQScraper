@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Main" VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="1244,8461" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:uasa="clr-namespace:UiPath.Activities.System.Arrays;assembly=UiPath.System.Activities" xmlns:ue="clr-namespace:UiPath.Excel;assembly=UiPath.Excel.Activities" xmlns:ueab="clr-namespace:UiPath.Excel.Activities.Business;assembly=UiPath.Excel.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uix="http://schemas.uipath.com/workflow/activities/uix" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="1244,6348" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:uasa="clr-namespace:UiPath.Activities.System.Arrays;assembly=UiPath.System.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uix="http://schemas.uipath.com/workflow/activities/uix" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
       <x:String>System.Activities</x:String>
@@ -58,6 +58,11 @@
       <x:String>UiPath.Mail.Activities.Business</x:String>
       <x:String>UiPath.UIAutomationNext.Exceptions</x:String>
       <x:String>Microsoft.VisualBasic.CompilerServices</x:String>
+      <x:String>UiPath.Core.Activities.TextModifications</x:String>
+      <x:String>UiPath.Activities.System.Workflow.Business</x:String>
+      <x:String>System.Linq.Expressions</x:String>
+      <x:String>UiPath.Core.Activities.Storage</x:String>
+      <x:String>UiPath.Core.Activities.Orchestrator</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -127,12 +132,13 @@
       <AssemblyReference>UiPath.Mail</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic.Forms</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic.Core</AssemblyReference>
+      <AssemblyReference>System.Collections.NonGeneric</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Main Sequence" sap:VirtualizedContainerService.HintSize="1254,8396" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="Main Sequence" sap:VirtualizedContainerService.HintSize="1254,6283" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Default="https://www.equibase.com/static/entry/index.html?SAP=TN" Name="theUrl" />
-      <Variable x:TypeArguments="sd:DataTable" Default="[New System.Data.DataTable]" Name="ExtractDataTable" />
+      <Variable x:TypeArguments="sd:DataTable" Default="[New System.Data.DataTable]" Name="dt_ExtractDataTable" />
       <Variable x:TypeArguments="x:String" Name="TheDay" />
       <Variable x:TypeArguments="x:String" Name="ErrorMessage" />
       <Variable x:TypeArguments="x:String" Name="TrackRefreshed" />
@@ -143,13 +149,13 @@
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <uix:NApplicationCard AttachMode="ByInstance" CloseMode="IfOpenedByAppBrowser" DisplayName="Use Edge to go to Equibase.com" sap:VirtualizedContainerService.HintSize="1192,8308" sap2010:WorkflowViewState.IdRef="NApplicationCard_3" InteractionMode="Simulate" OpenMode="IfNotOpen" ScopeGuid="8770b52e-cf9f-411c-a601-56766c9e5952" Version="V2">
+    <uix:NApplicationCard AttachMode="ByInstance" CloseMode="IfOpenedByAppBrowser" DisplayName="Use Edge to go to Equibase.com" sap:VirtualizedContainerService.HintSize="1192,6195" sap2010:WorkflowViewState.IdRef="NApplicationCard_3" InteractionMode="Simulate" OpenMode="IfNotOpen" ScopeGuid="8770b52e-cf9f-411c-a601-56766c9e5952" Version="V2">
       <uix:NApplicationCard.Body>
         <ActivityAction x:TypeArguments="x:Object">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="x:Object" Name="WSSessionData" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Do - Scrape list of tracks into datatable" sap:VirtualizedContainerService.HintSize="1158,8068" sap2010:WorkflowViewState.IdRef="Sequence_11">
+          <Sequence DisplayName="Do - Scrape list of tracks into datatable" sap:VirtualizedContainerService.HintSize="1158,5955" sap2010:WorkflowViewState.IdRef="Sequence_11">
             <Sequence.Variables>
               <Variable x:TypeArguments="x:Int32" Name="RaceCounter" />
             </Sequence.Variables>
@@ -158,40 +164,23 @@
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <uix:NExtractData AppendResults="False" ContinueOnError="True" DataTable="[ExtractDataTable]" DisplayName="Extract Table Data" ExtractDataSettings="&lt;Table xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' Type='Table'&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' Name='All Tracks' ReferenceName='Featured Tracks All Tracks' ReferenceIdx='0'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' IsDeleted='true' Name='Featured Tracks All Tracks Url' ReferenceName='Featured Tracks All Tracks Url' ReferenceIdx='1'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' Name='Today' ReferenceName='Today Today' ReferenceIdx='2'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' IsDeleted='true' Name='Today Today Src' ReferenceName='Today Today Src' ReferenceIdx='3'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' Name='Url' ReferenceName='Today Today Url' ReferenceIdx='4'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' IsDeleted='true' Name='Tomorrow Tomorrow' ReferenceName='Tomorrow Tomorrow' ReferenceIdx='5'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' IsDeleted='true' Name='Tomorrow Tomorrow Url' ReferenceName='Tomorrow Tomorrow Url' ReferenceIdx='6'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' IsDeleted='true' Name='Future Future' ReferenceName='Future Future' ReferenceIdx='7'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' IsDeleted='true' Name='Future Future Url' ReferenceName='Future Future Url' ReferenceIdx='8'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' IsDeleted='true' Name='Past Past' ReferenceName='Past Past' ReferenceIdx='9'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' IsDeleted='true' Name='Past Past Url' ReferenceName='Past Past Url' ReferenceIdx='10'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&lt;/Table&gt;" ExtractMetadata="&lt;extract-table get_columns_name='1' get_empty_columns='1' columns_name_source='Longest'&gt;&lt;column name='Featured Tracks All Tracks' attr='fulltext' name2='Featured Tracks All Tracks Url' attr2='href' /&gt;&lt;column name='Today Today' attr='fulltext' name2='Today Today Src' attr2='src' name3='Today Today Url' attr3='href' /&gt;&lt;column name='Tomorrow Tomorrow' attr='fulltext' name2='Tomorrow Tomorrow Url' attr2='href' /&gt;&lt;column name='Future Future' attr='fulltext' name2='Future Future Url' attr2='href' /&gt;&lt;column name='Past Past' attr='fulltext' name2='Past Past Url' attr2='href' /&gt;&lt;/extract-table&gt;" sap:VirtualizedContainerService.HintSize="1096,189" sap2010:WorkflowViewState.IdRef="NExtractData_6" LimitExtractionTo="None" MaximumResults="0" ScopeIdentifier="8770b52e-cf9f-411c-a601-56766c9e5952" Version="V3">
+            <uix:NExtractData AppendResults="False" ContinueOnError="True" DataTable="[dt_ExtractDataTable]" DisplayName="Extract Table Data" ExtractDataSettings="&lt;Table xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' Type='Table'&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' Name='All Tracks' ReferenceName='Featured Tracks All Tracks' ReferenceIdx='0'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' IsDeleted='true' Name='Featured Tracks All Tracks Url' ReferenceName='Featured Tracks All Tracks Url' ReferenceIdx='1'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' Name='Today' ReferenceName='Today Today' ReferenceIdx='2'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' IsDeleted='true' Name='Today Today Src' ReferenceName='Today Today Src' ReferenceIdx='3'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' Name='Url' ReferenceName='Today Today Url' ReferenceIdx='4'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' IsDeleted='true' Name='Tomorrow Tomorrow' ReferenceName='Tomorrow Tomorrow' ReferenceIdx='5'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' IsDeleted='true' Name='Tomorrow Tomorrow Url' ReferenceName='Tomorrow Tomorrow Url' ReferenceIdx='6'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' IsDeleted='true' Name='Future Future' ReferenceName='Future Future' ReferenceIdx='7'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' IsDeleted='true' Name='Future Future Url' ReferenceName='Future Future Url' ReferenceIdx='8'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' IsDeleted='true' Name='Past Past' ReferenceName='Past Past' ReferenceIdx='9'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' IsDeleted='true' Name='Past Past Url' ReferenceName='Past Past Url' ReferenceIdx='10'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&lt;/Table&gt;" ExtractMetadata="&lt;extract-table get_columns_name='1' get_empty_columns='1' columns_name_source='Longest'&gt;&lt;column name='Featured Tracks All Tracks' attr='fulltext' name2='Featured Tracks All Tracks Url' attr2='href' /&gt;&lt;column name='Today Today' attr='fulltext' name2='Today Today Src' attr2='src' name3='Today Today Url' attr3='href' /&gt;&lt;column name='Tomorrow Tomorrow' attr='fulltext' name2='Tomorrow Tomorrow Url' attr2='href' /&gt;&lt;column name='Future Future' attr='fulltext' name2='Future Future Url' attr2='href' /&gt;&lt;column name='Past Past' attr='fulltext' name2='Past Past Url' attr2='href' /&gt;&lt;/extract-table&gt;" sap:VirtualizedContainerService.HintSize="1096,189" sap2010:WorkflowViewState.IdRef="NExtractData_6" LimitExtractionTo="None" MaximumResults="0" ScopeIdentifier="8770b52e-cf9f-411c-a601-56766c9e5952" Version="V3">
               <uix:NExtractData.Target>
                 <uix:TargetAnchorable DesignTimeRectangle="397, 260, 807, 1661" DesignTimeScaleFactor="1" FriendlyName="'Featured Tracks'" FullSelectorArgument="&lt;webctrl id='tracks' tag='TABLE' /&gt;" Guid="bd1edea9-59fa-484d-9408-d4bc6de97cca" InformativeScreenshot="1832af9e1ba88e6463f957045002f481.png" ScopeSelectorArgument="&lt;html app='msedge.exe' title='Equibase | Entries' /&gt;" SearchSteps="Selector" Version="V2" Visibility="Interactive" />
               </uix:NExtractData.Target>
             </uix:NExtractData>
-            <ui:RemoveDuplicateRows DataTable="[ExtractDataTable]" DisplayName="Remove Duplicate Rows" sap:VirtualizedContainerService.HintSize="1096,112" sap2010:WorkflowViewState.IdRef="RemoveDuplicateRows_2" OutputDataTable="[ExtractDataTable]" />
-            <ui:FilterDataTable DataTable="[ExtractDataTable]" DisplayName="Filter Data Table" FilterRowsMode="Remove" sap:VirtualizedContainerService.HintSize="1096,193" sap2010:WorkflowViewState.IdRef="FilterDataTable_4" OutputDataTable="[ExtractDataTable]" SelectColumnsMode="Keep">
-              <ui:FilterDataTable.Filters>
-                <scg:List x:TypeArguments="ui:FilterOperationArgument" Capacity="4">
-                  <ui:FilterOperationArgument Operand="{x:Null}" BooleanOperator="And" Operator="EMPTY">
-                    <ui:FilterOperationArgument.Column>
-                      <InArgument x:TypeArguments="x:String">["Today"]</InArgument>
-                    </ui:FilterOperationArgument.Column>
-                  </ui:FilterOperationArgument>
-                </scg:List>
-              </ui:FilterDataTable.Filters>
-              <ui:FilterDataTable.SelectColumns>
-                <scg:List x:TypeArguments="InArgument" Capacity="4">
-                  <InArgument x:TypeArguments="x:String">["All Tracks"]</InArgument>
-                  <InArgument x:TypeArguments="x:String">["Url"]</InArgument>
-                </scg:List>
-              </ui:FilterDataTable.SelectColumns>
-            </ui:FilterDataTable>
-            <ui:AddDataColumn x:TypeArguments="x:String" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" DefaultValue="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="Races" DataTable="[ExtractDataTable]" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="1096,218" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_6" />
-            <ui:AddDataColumn x:TypeArguments="x:String" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" DefaultValue="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="Start Time" DataTable="[ExtractDataTable]" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="1096,218" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_5" />
-            <ui:AddDataColumn x:TypeArguments="x:String" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" DefaultValue="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="Turf" DataTable="[ExtractDataTable]" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="1096,218" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_7" />
-            <ui:AddDataColumn x:TypeArguments="x:String" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" DefaultValue="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="Unbettable" DataTable="[ExtractDataTable]" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="1096,218" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_9" />
-            <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[ExtractDataTable]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="1096,5363" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="PrepareDataTable.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="1096,145" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" Level="Info" LogEntry="OnlyInvocation" LogExit="OnlySuccessfulReturn" UnSafe="False" WorkflowFileName="PrepareDataTable.xaml">
+              <ui:InvokeWorkflowFile.Arguments>
+                <InOutArgument x:TypeArguments="sd:DataTable" x:Key="io_dt_ExtractDataTable">[dt_ExtractDataTable]</InOutArgument>
+              </ui:InvokeWorkflowFile.Arguments>
+            </ui:InvokeWorkflowFile>
+            <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[dt_ExtractDataTable]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="1096,5393" sap2010:WorkflowViewState.IdRef="ForEachRow_4">
               <ui:ForEachRow.Body>
                 <ActivityAction x:TypeArguments="sd:DataRow">
                   <ActivityAction.Argument>
                     <DelegateInArgument x:TypeArguments="sd:DataRow" Name="CurrentRow" />
                   </ActivityAction.Argument>
-                  <Sequence DisplayName="Body - of for each row in data table" sap:VirtualizedContainerService.HintSize="1062,5214" sap2010:WorkflowViewState.IdRef="Sequence_21">
+                  <Sequence DisplayName="Body - of for each row in data table" sap:VirtualizedContainerService.HintSize="1062,5244" sap2010:WorkflowViewState.IdRef="Sequence_54">
                     <Sequence.Variables>
                       <Variable x:TypeArguments="x:String" Name="trackLink" />
                       <Variable x:TypeArguments="sd:DataTable" Name="RaceTable" />
@@ -206,7 +195,7 @@
                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
-                    <Assign DisplayName="Assign - Get the url for the running tracks" sap:VirtualizedContainerService.HintSize="1000,114" sap2010:WorkflowViewState.IdRef="Assign_10">
+                    <Assign DisplayName="Assign - Get the url for the running tracks" sap:VirtualizedContainerService.HintSize="1000,114" sap2010:WorkflowViewState.IdRef="Assign_27">
                       <Assign.To>
                         <OutArgument x:TypeArguments="x:String">[trackLink]</OutArgument>
                       </Assign.To>
@@ -214,25 +203,26 @@
                         <InArgument x:TypeArguments="x:String">[CurrentRow.Item("Url").ToString]</InArgument>
                       </Assign.Value>
                     </Assign>
-                    <uix:NGoToUrl DisplayName="Go To URL for each track" sap:VirtualizedContainerService.HintSize="1000,114" sap2010:WorkflowViewState.IdRef="NGoToUrl_4" Url="[trackLink]" Version="V3" />
-                    <uix:NCheckState DisplayName="Check App State  - see if start time appears" sap:VirtualizedContainerService.HintSize="1000,798" sap2010:WorkflowViewState.IdRef="NCheckState_2" ScopeIdentifier="8770b52e-cf9f-411c-a601-56766c9e5952" Timeout="30" Version="V3">
+                    <uix:NGoToUrl DisplayName="Go To URL for each track" sap:VirtualizedContainerService.HintSize="1000,114" sap2010:WorkflowViewState.IdRef="NGoToUrl_5" Url="[trackLink]" Version="V3" />
+                    <uix:NCheckState DisplayName="Check App State  - see if start time appears" sap:VirtualizedContainerService.HintSize="1000,798" sap2010:WorkflowViewState.IdRef="NCheckState_3" ScopeIdentifier="8770b52e-cf9f-411c-a601-56766c9e5952" Timeout="10" Version="V3">
                       <uix:NCheckState.IfExists>
-                        <Sequence DisplayName="Target appears" sap:VirtualizedContainerService.HintSize="450,105" sap2010:WorkflowViewState.IdRef="Sequence_51">
+                        <Sequence DisplayName="Target appears" sap:VirtualizedContainerService.HintSize="450,207" sap2010:WorkflowViewState.IdRef="Sequence_55">
                           <sap:WorkflowViewStateService.ViewState>
                             <scg:Dictionary x:TypeArguments="x:String, x:Object">
                               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                             </scg:Dictionary>
                           </sap:WorkflowViewStateService.ViewState>
+                          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="388,117" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[trackLink.ToString + &quot; was successful...&quot;]" />
                         </Sequence>
                       </uix:NCheckState.IfExists>
                       <uix:NCheckState.IfNotExists>
-                        <Sequence DisplayName="Target does not appear" sap:VirtualizedContainerService.HintSize="496,549" sap2010:WorkflowViewState.IdRef="Sequence_52">
+                        <Sequence DisplayName="Target does not appear" sap:VirtualizedContainerService.HintSize="496,549" sap2010:WorkflowViewState.IdRef="Sequence_56">
                           <sap:WorkflowViewStateService.ViewState>
                             <scg:Dictionary x:TypeArguments="x:String, x:Object">
                               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                             </scg:Dictionary>
                           </sap:WorkflowViewStateService.ViewState>
-                          <Assign DisplayName="Assign - Count how many times it needed to be refreshed" sap:VirtualizedContainerService.HintSize="434,114" sap2010:WorkflowViewState.IdRef="Assign_23">
+                          <Assign DisplayName="Assign - Count how many times it needed to be refreshed" sap:VirtualizedContainerService.HintSize="434,114" sap2010:WorkflowViewState.IdRef="Assign_28">
                             <Assign.To>
                               <OutArgument x:TypeArguments="x:Int32">[RefreshCount]</OutArgument>
                             </Assign.To>
@@ -240,7 +230,7 @@
                               <InArgument x:TypeArguments="x:Int32">[RefreshCount + 1]</InArgument>
                             </Assign.Value>
                           </Assign>
-                          <Assign DisplayName="Assign - Which track was refreshed" sap:VirtualizedContainerService.HintSize="434,114" sap2010:WorkflowViewState.IdRef="Assign_26">
+                          <Assign DisplayName="Assign - Which track was refreshed" sap:VirtualizedContainerService.HintSize="434,114" sap2010:WorkflowViewState.IdRef="Assign_29">
                             <Assign.To>
                               <OutArgument x:TypeArguments="x:String">[TrackRefreshed]</OutArgument>
                             </Assign.To>
@@ -248,8 +238,8 @@
                               <InArgument x:TypeArguments="x:String">[String.join(" ", Tracklink)]</InArgument>
                             </Assign.Value>
                           </Assign>
-                          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="434,124" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Had to refresh &quot; + trackLink.ToString]" />
-                          <uix:NNavigateBrowser Action="Refresh" DisplayName="Navigate Browser - Refresh" sap:VirtualizedContainerService.HintSize="434,107" sap2010:WorkflowViewState.IdRef="NNavigateBrowser_1" Version="V3" />
+                          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="434,124" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;Had to refresh &quot; + trackLink.ToString]" />
+                          <uix:NNavigateBrowser Action="Refresh" DisplayName="Navigate Browser - Refresh" sap:VirtualizedContainerService.HintSize="434,107" sap2010:WorkflowViewState.IdRef="NNavigateBrowser_2" Version="V3" />
                         </Sequence>
                       </uix:NCheckState.IfNotExists>
                       <uix:NCheckState.Target>
@@ -262,7 +252,7 @@
                         </uix:TargetAnchorable>
                       </uix:NCheckState.Target>
                     </uix:NCheckState>
-                    <uix:NGetText DisplayName="Get Text 'Est. Post'" sap:VirtualizedContainerService.HintSize="1000,189" sap2010:WorkflowViewState.IdRef="NGetText_1" ScopeIdentifier="8770b52e-cf9f-411c-a601-56766c9e5952" TextString="[StartTime]" Version="V3">
+                    <uix:NGetText DisplayName="Get Text 'Est. Post'" sap:VirtualizedContainerService.HintSize="1000,189" sap2010:WorkflowViewState.IdRef="NGetText_2" ScopeIdentifier="8770b52e-cf9f-411c-a601-56766c9e5952" TextString="[StartTime]" Version="V3">
                       <uix:NGetText.Target>
                         <uix:TargetAnchorable BrowserURL="https://www.equibase.com/static/entry/RaceCardIndexPRX082223USA-EQB.html" CvType="AnyWordGroup" DesignTimeRectangle="926, 626, 108, 38" DesignTimeScaleFactor="1" ElementType="Text" FriendlyName="'12:40 PM ET'" FullSelectorArgument="&lt;webctrl id='entryRaces' tag='TABLE' /&gt;&lt;webctrl isleaf='1' tableCol='7' tableRow='2' tag='TD' /&gt;" FuzzySelectorArgument="&lt;webctrl id='entryRaces' tag='TABLE' /&gt;&lt;webctrl isleaf='1' type='' class='' tag='TD' /&gt;" Guid="9ac6d092-4243-450e-a879-686c6bf9b6bb" ImageBase64="" InformativeScreenshot="72a61b25c2152533a7fe0db371634641.png" ScopeSelectorArgument="&lt;html app='msedge.exe' title='Equibase | Parx Racing Entries' /&gt;" SearchSteps="Selector, FuzzySelector" Version="V2" Visibility="Interactive">
                           <uix:TargetAnchorable.Anchors>
@@ -273,12 +263,12 @@
                         </uix:TargetAnchorable>
                       </uix:NGetText.Target>
                     </uix:NGetText>
-                    <uix:NExtractData AppendResults="False" ContinueOnError="True" DataTable="[RaceTable]" DisplayName="Extract Table Data from equibase race page" ExtractDataSettings="&lt;Table xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' Type='Table'&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Race' ReferenceIdx='0' Name='Race'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Race Url' ReferenceIdx='1' Name='Race Url' IsDeleted='true'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Purse' ReferenceIdx='2' Name='Purse' IsDeleted='true'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Race Type' ReferenceIdx='3' Name='Race Type'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Race Type Url' ReferenceIdx='4' Name='Race Type Url' IsDeleted='true'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Distance' ReferenceIdx='5' Name='Distance'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Surface' ReferenceIdx='6' Name='Surface'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Starters' ReferenceIdx='7' Name='Starters'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Est. Post' ReferenceIdx='8' Name='Est. Post' Sort='Asc'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='DateColumnFormat' Format='h:mm tt &quot;MT&quot;' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Free Tools' ReferenceIdx='9' Name='Free Tools' IsDeleted='true'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Free Tools Src' ReferenceIdx='10' Name='Free Tools Src' IsDeleted='true'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Free Tools Alt Text' ReferenceIdx='11' Name='Free Tools Alt Text' IsDeleted='true'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Free Tools Url' ReferenceIdx='12' Name='Free Tools Url' IsDeleted='true'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&lt;/Table&gt;" ExtractMetadata="&lt;extract-table get_columns_name='1' get_empty_columns='1' columns_name_source='Longest'&gt;&lt;column name='Race' attr='fulltext' name2='Race Url' attr2='href' /&gt;&lt;column name='Purse' attr='fulltext' /&gt;&lt;column name='Race Type' attr='fulltext' /&gt;&lt;column name='Distance' attr='fulltext' /&gt;&lt;column name='Surface' attr='fulltext' /&gt;&lt;column name='Starters' attr='fulltext' /&gt;&lt;column name='Est. Post' attr='fulltext' /&gt;&lt;column name='Free Tools' attr='fulltext' name2='Free Tools Src' attr2='src' name3='Free Tools Alt Text' attr3='alt' name4='Free Tools Url' attr4='href' /&gt;&lt;/extract-table&gt;" sap:VirtualizedContainerService.HintSize="1000,189" sap2010:WorkflowViewState.IdRef="NExtractData_5" LimitExtractionTo="None" MaximumResults="0" ScopeIdentifier="8770b52e-cf9f-411c-a601-56766c9e5952" Version="V3">
+                    <uix:NExtractData AppendResults="False" ContinueOnError="True" DataTable="[RaceTable]" DisplayName="Extract Table Data from equibase race page" ExtractDataSettings="&lt;Table xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' Type='Table'&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Race' ReferenceIdx='0' Name='Race'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Race Url' ReferenceIdx='1' Name='Race Url' IsDeleted='true'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Purse' ReferenceIdx='2' Name='Purse' IsDeleted='true'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Race Type' ReferenceIdx='3' Name='Race Type'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Race Type Url' ReferenceIdx='4' Name='Race Type Url' IsDeleted='true'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Distance' ReferenceIdx='5' Name='Distance'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Surface' ReferenceIdx='6' Name='Surface'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Starters' ReferenceIdx='7' Name='Starters'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Est. Post' ReferenceIdx='8' Name='Est. Post' Sort='Asc'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='DateColumnFormat' Format='h:mm tt &quot;MT&quot;' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Free Tools' ReferenceIdx='9' Name='Free Tools' IsDeleted='true'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Free Tools Src' ReferenceIdx='10' Name='Free Tools Src' IsDeleted='true'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Free Tools Alt Text' ReferenceIdx='11' Name='Free Tools Alt Text' IsDeleted='true'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Free Tools Url' ReferenceIdx='12' Name='Free Tools Url' IsDeleted='true'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&lt;/Table&gt;" ExtractMetadata="&lt;extract-table get_columns_name='1' get_empty_columns='1' columns_name_source='Longest'&gt;&lt;column name='Race' attr='fulltext' name2='Race Url' attr2='href' /&gt;&lt;column name='Purse' attr='fulltext' /&gt;&lt;column name='Race Type' attr='fulltext' /&gt;&lt;column name='Distance' attr='fulltext' /&gt;&lt;column name='Surface' attr='fulltext' /&gt;&lt;column name='Starters' attr='fulltext' /&gt;&lt;column name='Est. Post' attr='fulltext' /&gt;&lt;column name='Free Tools' attr='fulltext' name2='Free Tools Src' attr2='src' name3='Free Tools Alt Text' attr3='alt' name4='Free Tools Url' attr4='href' /&gt;&lt;/extract-table&gt;" sap:VirtualizedContainerService.HintSize="1000,189" sap2010:WorkflowViewState.IdRef="NExtractData_7" LimitExtractionTo="None" MaximumResults="0" ScopeIdentifier="8770b52e-cf9f-411c-a601-56766c9e5952" Version="V3">
                       <uix:NExtractData.Target>
                         <uix:TargetAnchorable DesignTimeRectangle="397, 288, 807, 601" DesignTimeScaleFactor="1" FriendlyName="'Race Purse Race Type'" FullSelectorArgument="&lt;webctrl id='entryRaces' tag='TABLE' /&gt;" Guid="f3d7694f-fa1b-408c-bb09-16ddb17d2212" InformativeScreenshot="e50ac0162dd2d688254e7d48b471d5f5.png" ScopeSelectorArgument="&lt;html app='msedge.exe' title='Equibase | Albuquerque Entries' /&gt;" SearchSteps="Selector" Version="V2" Visibility="Interactive" />
                       </uix:NExtractData.Target>
                     </uix:NExtractData>
-                    <Assign DisplayName="Assign - initialize RaceCounter" sap:VirtualizedContainerService.HintSize="1000,114" sap2010:WorkflowViewState.IdRef="Assign_14">
+                    <Assign DisplayName="Assign - initialize RaceCounter" sap:VirtualizedContainerService.HintSize="1000,114" sap2010:WorkflowViewState.IdRef="Assign_30">
                       <Assign.To>
                         <OutArgument x:TypeArguments="x:Int32">[RaceCounter]</OutArgument>
                       </Assign.To>
@@ -286,20 +276,20 @@
                         <InArgument x:TypeArguments="x:Int32">0</InArgument>
                       </Assign.Value>
                     </Assign>
-                    <ui:UpdateRowItem ColumnIndex="{x:Null}" ColumnName="Start Time" DisplayName="Update Start Time column for this track" sap:VirtualizedContainerService.HintSize="1000,224" sap2010:WorkflowViewState.IdRef="UpdateRowItem_2" Row="[CurrentRow]" Value="[StartTime]" />
-                    <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[RaceTable]" DisplayName="For Each Row  - Checking for unbettable or turf races" sap:VirtualizedContainerService.HintSize="1000,1422" sap2010:WorkflowViewState.IdRef="ForEachRow_3">
+                    <ui:UpdateRowItem ColumnIndex="{x:Null}" ColumnName="Start Time" DisplayName="Update Start Time column for this track" sap:VirtualizedContainerService.HintSize="1000,224" sap2010:WorkflowViewState.IdRef="UpdateRowItem_9" Row="[CurrentRow]" Value="[StartTime]" />
+                    <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[RaceTable]" DisplayName="For Each Row  - Checking for unbettable or turf races" sap:VirtualizedContainerService.HintSize="1000,1437" sap2010:WorkflowViewState.IdRef="ForEachRow_5">
                       <ui:ForEachRow.Body>
                         <ActivityAction x:TypeArguments="sd:DataRow">
                           <ActivityAction.Argument>
                             <DelegateInArgument x:TypeArguments="sd:DataRow" Name="RaceRow" />
                           </ActivityAction.Argument>
-                          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="512,1273" sap2010:WorkflowViewState.IdRef="Sequence_25">
+                          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="512,1288" sap2010:WorkflowViewState.IdRef="Sequence_61">
                             <sap:WorkflowViewStateService.ViewState>
                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                               </scg:Dictionary>
                             </sap:WorkflowViewStateService.ViewState>
-                            <Assign DisplayName="Assign - increment RaceCounter" sap:VirtualizedContainerService.HintSize="450,114" sap2010:WorkflowViewState.IdRef="Assign_13">
+                            <Assign DisplayName="Assign - increment RaceCounter" sap:VirtualizedContainerService.HintSize="450,114" sap2010:WorkflowViewState.IdRef="Assign_31">
                               <Assign.To>
                                 <OutArgument x:TypeArguments="x:Int32">[RaceCounter]</OutArgument>
                               </Assign.To>
@@ -307,20 +297,20 @@
                                 <InArgument x:TypeArguments="x:Int32">[RaceCounter + 1]</InArgument>
                               </Assign.Value>
                             </Assign>
-                            <If Condition="[RaceRow.ItemArray.Contains(&quot;250 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;330 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;770 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;350 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;700 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;400 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;300 Y&quot;) OR RaceRow.Item(&quot;Race Type&quot;).ToString.Contains(&quot;Trials&quot;) OR RaceRow.Item(&quot;Surface&quot;).ToString.Contains(&quot;Hurdle&quot;) OR RaceRow.ItemArray.Contains(&quot;220 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;870 Y&quot;)]" DisplayName="If race is unbettable" sap:VirtualizedContainerService.HintSize="450,568" sap2010:WorkflowViewState.IdRef="If_2">
+                            <If Condition="[RaceRow.ItemArray.Contains(&quot;250 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;330 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;770 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;350 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;700 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;400 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;300 Y&quot;) OR RaceRow.Item(&quot;Race Type&quot;).ToString.Contains(&quot;Trials&quot;) OR RaceRow.Item(&quot;Surface&quot;).ToString.Contains(&quot;Hurdle&quot;) OR RaceRow.ItemArray.Contains(&quot;220 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;870 Y&quot;)]" DisplayName="If race is unbettable" sap:VirtualizedContainerService.HintSize="450,574" sap2010:WorkflowViewState.IdRef="If_11">
                               <If.Then>
-                                <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,298" sap2010:WorkflowViewState.IdRef="Sequence_28">
+                                <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,301" sap2010:WorkflowViewState.IdRef="Sequence_57">
                                   <sap:WorkflowViewStateService.ViewState>
                                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                     </scg:Dictionary>
                                   </sap:WorkflowViewStateService.ViewState>
-                                  <uasa:AppendItemToList x:TypeArguments="x:Int32" ItemIndex="{x:Null}" DisplayName="Append Unbettable races to List" sap:VirtualizedContainerService.HintSize="354,165" sap2010:WorkflowViewState.IdRef="AppendItemToList`1_3" ItemToAppend="[RaceCounter]" List="[UnbettableCount]" />
-                                  <ui:Continue sap:VirtualizedContainerService.HintSize="354,48" sap2010:WorkflowViewState.IdRef="Continue_1" />
+                                  <uasa:AppendItemToList x:TypeArguments="x:Int32" ItemIndex="{x:Null}" DisplayName="Append Unbettable races to List" sap:VirtualizedContainerService.HintSize="354,165" sap2010:WorkflowViewState.IdRef="AppendItemToList`1_4" ItemToAppend="[RaceCounter]" List="[UnbettableCount]" />
+                                  <ui:Continue sap:VirtualizedContainerService.HintSize="354,48" sap2010:WorkflowViewState.IdRef="Continue_2" />
                                 </Sequence>
                               </If.Then>
                               <If.Else>
-                                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,100" sap2010:WorkflowViewState.IdRef="Sequence_29">
+                                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,103" sap2010:WorkflowViewState.IdRef="Sequence_58">
                                   <sap:WorkflowViewStateService.ViewState>
                                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -329,19 +319,19 @@
                                 </Sequence>
                               </If.Else>
                             </If>
-                            <If Condition="[RaceRow.ItemArray.Contains(&quot;Turf&quot;)]" DisplayName="If race is turf" sap:VirtualizedContainerService.HintSize="450,504" sap2010:WorkflowViewState.IdRef="If_1">
+                            <If Condition="[RaceRow.ItemArray.Contains(&quot;Turf&quot;)]" DisplayName="If race is turf" sap:VirtualizedContainerService.HintSize="450,510" sap2010:WorkflowViewState.IdRef="If_12">
                               <If.Then>
-                                <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,241" sap2010:WorkflowViewState.IdRef="Sequence_26">
+                                <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,244" sap2010:WorkflowViewState.IdRef="Sequence_59">
                                   <sap:WorkflowViewStateService.ViewState>
                                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                     </scg:Dictionary>
                                   </sap:WorkflowViewStateService.ViewState>
-                                  <uasa:AppendItemToList x:TypeArguments="x:Int32" ItemIndex="{x:Null}" DisplayName="Append Turf races to List" sap:VirtualizedContainerService.HintSize="354,156" sap2010:WorkflowViewState.IdRef="AppendItemToList`1_2" ItemToAppend="[RaceCounter]" List="[SurfaceCount]" />
+                                  <uasa:AppendItemToList x:TypeArguments="x:Int32" ItemIndex="{x:Null}" DisplayName="Append Turf races to List" sap:VirtualizedContainerService.HintSize="354,156" sap2010:WorkflowViewState.IdRef="AppendItemToList`1_5" ItemToAppend="[RaceCounter]" List="[SurfaceCount]" />
                                 </Sequence>
                               </If.Then>
                               <If.Else>
-                                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,100" sap2010:WorkflowViewState.IdRef="Sequence_27">
+                                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,103" sap2010:WorkflowViewState.IdRef="Sequence_60">
                                   <sap:WorkflowViewStateService.ViewState>
                                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -354,10 +344,10 @@
                         </ActivityAction>
                       </ui:ForEachRow.Body>
                     </ui:ForEachRow>
-                    <ui:MultipleAssign sap2010:Annotation.AnnotationText="Convert SurfaceCount and UnbettableCount lists to SurfaceString and UnbettableString for output." DisplayName="Multiple Assign for SurfaceString and UnbettableString" sap:VirtualizedContainerService.HintSize="1000,206" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+                    <ui:MultipleAssign sap2010:Annotation.AnnotationText="Convert SurfaceCount and UnbettableCount lists to SurfaceString and UnbettableString for output." DisplayName="Multiple Assign for SurfaceString and UnbettableString" sap:VirtualizedContainerService.HintSize="1000,206" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
                       <ui:MultipleAssign.AssignOperations>
                         <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
-                          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
+                          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_3">
                             <ui:AssignOperation.To>
                               <OutArgument x:TypeArguments="x:String">[SurfaceString]</OutArgument>
                             </ui:AssignOperation.To>
@@ -365,7 +355,7 @@
                               <InArgument x:TypeArguments="x:String">[String.Join(",", SurfaceCount)]</InArgument>
                             </ui:AssignOperation.Value>
                           </ui:AssignOperation>
-                          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_2">
+                          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_4">
                             <ui:AssignOperation.To>
                               <OutArgument x:TypeArguments="x:String">[UnbettableRaces]</OutArgument>
                             </ui:AssignOperation.To>
@@ -381,48 +371,48 @@
                         </scg:Dictionary>
                       </sap:WorkflowViewStateService.ViewState>
                     </ui:MultipleAssign>
-                    <If Condition="[SurfaceString.Equals(&quot;&quot;)]" DisplayName="If - There Are No Turf Races" sap:VirtualizedContainerService.HintSize="1000,770" sap2010:WorkflowViewState.IdRef="If_9">
+                    <If Condition="[SurfaceString.Equals(&quot;&quot;)]" DisplayName="If - There Are No Turf Races" sap:VirtualizedContainerService.HintSize="1000,776" sap2010:WorkflowViewState.IdRef="If_13">
                       <If.Then>
-                        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,300" sap2010:WorkflowViewState.IdRef="Sequence_47">
+                        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,303" sap2010:WorkflowViewState.IdRef="Sequence_62">
                           <sap:WorkflowViewStateService.ViewState>
                             <scg:Dictionary x:TypeArguments="x:String, x:Object">
                               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                             </scg:Dictionary>
                           </sap:WorkflowViewStateService.ViewState>
-                          <ui:UpdateRowItem ColumnIndex="{x:Null}" ColumnName="Turf" DisplayName="Update Row in Races" sap:VirtualizedContainerService.HintSize="354,215" sap2010:WorkflowViewState.IdRef="UpdateRowItem_7" Row="[CurrentRow]" Value="[&quot;None&quot;]" />
+                          <ui:UpdateRowItem ColumnIndex="{x:Null}" ColumnName="Turf" DisplayName="Update Row in Races For No Turf" sap:VirtualizedContainerService.HintSize="354,215" sap2010:WorkflowViewState.IdRef="UpdateRowItem_10" Row="[CurrentRow]" Value="[&quot;None&quot;]" />
                         </Sequence>
                       </If.Then>
                       <If.Else>
-                        <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,300" sap2010:WorkflowViewState.IdRef="Sequence_48">
+                        <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,303" sap2010:WorkflowViewState.IdRef="Sequence_63">
                           <sap:WorkflowViewStateService.ViewState>
                             <scg:Dictionary x:TypeArguments="x:String, x:Object">
                               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                             </scg:Dictionary>
                           </sap:WorkflowViewStateService.ViewState>
-                          <ui:UpdateRowItem ColumnIndex="{x:Null}" ColumnName="Turf" DisplayName="Update Row in Races" sap:VirtualizedContainerService.HintSize="354,215" sap2010:WorkflowViewState.IdRef="UpdateRowItem_3" Row="[CurrentRow]" Value="[SurfaceString.ToString]" />
+                          <ui:UpdateRowItem ColumnIndex="{x:Null}" ColumnName="Turf" DisplayName="Update Row in Races For Turf" sap:VirtualizedContainerService.HintSize="354,215" sap2010:WorkflowViewState.IdRef="UpdateRowItem_11" Row="[CurrentRow]" Value="[SurfaceString.ToString]" />
                         </Sequence>
                       </If.Else>
                     </If>
-                    <ui:UpdateRowItem ColumnIndex="{x:Null}" ColumnName="Races" DisplayName="Update Row in Races" sap:VirtualizedContainerService.HintSize="1000,224" sap2010:WorkflowViewState.IdRef="UpdateRowItem_1" Row="[CurrentRow]" Value="[RaceCounter.ToString]" />
-                    <If Condition="[UnbettableRaces.Equals(&quot;&quot;)]" DisplayName="If - No Unbettable Races" sap:VirtualizedContainerService.HintSize="1000,763" sap2010:WorkflowViewState.IdRef="If_10">
+                    <ui:UpdateRowItem ColumnIndex="{x:Null}" ColumnName="Races" DisplayName="Update Row in Races For Number Of Races" sap:VirtualizedContainerService.HintSize="1000,224" sap2010:WorkflowViewState.IdRef="UpdateRowItem_12" Row="[CurrentRow]" Value="[RaceCounter.ToString]" />
+                    <If Condition="[UnbettableRaces.Equals(&quot;&quot;)]" DisplayName="If - No Unbettable Races" sap:VirtualizedContainerService.HintSize="1000,769" sap2010:WorkflowViewState.IdRef="If_14">
                       <If.Then>
-                        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,300" sap2010:WorkflowViewState.IdRef="Sequence_49">
+                        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,303" sap2010:WorkflowViewState.IdRef="Sequence_64">
                           <sap:WorkflowViewStateService.ViewState>
                             <scg:Dictionary x:TypeArguments="x:String, x:Object">
                               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                             </scg:Dictionary>
                           </sap:WorkflowViewStateService.ViewState>
-                          <ui:UpdateRowItem ColumnIndex="{x:Null}" ColumnName="Unbettable" DisplayName="Update Row in Races" sap:VirtualizedContainerService.HintSize="354,215" sap2010:WorkflowViewState.IdRef="UpdateRowItem_8" Row="[CurrentRow]" Value="[&quot;None&quot;]" />
+                          <ui:UpdateRowItem ColumnIndex="{x:Null}" ColumnName="Unbettable" DisplayName="Update Row in Races For No Unbettable Races" sap:VirtualizedContainerService.HintSize="354,215" sap2010:WorkflowViewState.IdRef="UpdateRowItem_13" Row="[CurrentRow]" Value="[&quot;None&quot;]" />
                         </Sequence>
                       </If.Then>
                       <If.Else>
-                        <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,300" sap2010:WorkflowViewState.IdRef="Sequence_50">
+                        <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,303" sap2010:WorkflowViewState.IdRef="Sequence_65">
                           <sap:WorkflowViewStateService.ViewState>
                             <scg:Dictionary x:TypeArguments="x:String, x:Object">
                               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                             </scg:Dictionary>
                           </sap:WorkflowViewStateService.ViewState>
-                          <ui:UpdateRowItem ColumnIndex="{x:Null}" ColumnName="Unbettable" DisplayName="Update Row in Races" sap:VirtualizedContainerService.HintSize="354,215" sap2010:WorkflowViewState.IdRef="UpdateRowItem_4" Row="[CurrentRow]" Value="[UnbettableRaces.ToString]" />
+                          <ui:UpdateRowItem ColumnIndex="{x:Null}" ColumnName="Unbettable" DisplayName="Update Row in Races For Unbettable Races" sap:VirtualizedContainerService.HintSize="354,215" sap2010:WorkflowViewState.IdRef="UpdateRowItem_14" Row="[CurrentRow]" Value="[UnbettableRaces.ToString]" />
                         </Sequence>
                       </If.Else>
                     </If>
@@ -430,61 +420,12 @@
                 </ActivityAction>
               </ui:ForEachRow.Body>
             </ui:ForEachRow>
-            <ui:FilterDataTable DataTable="[ExtractDataTable]" DisplayName="Filter Data Table" FilterRowsMode="Keep" sap:VirtualizedContainerService.HintSize="1096,193" sap2010:WorkflowViewState.IdRef="FilterDataTable_5" OutputDataTable="[ExtractDataTable]" SelectColumnsMode="Remove">
-              <ui:FilterDataTable.Filters>
-                <scg:List x:TypeArguments="ui:FilterOperationArgument" Capacity="4">
-                  <ui:FilterOperationArgument Column="{x:Null}" Operand="{x:Null}" BooleanOperator="And" Operator="LT" />
-                </scg:List>
-              </ui:FilterDataTable.Filters>
-              <ui:FilterDataTable.SelectColumns>
-                <scg:List x:TypeArguments="InArgument" Capacity="4">
-                  <InArgument x:TypeArguments="x:String">["Url"]</InArgument>
-                </scg:List>
-              </ui:FilterDataTable.SelectColumns>
-            </ui:FilterDataTable>
-            <ui:SortDataTable ColumnIndex="{x:Null}" DataColumn="{x:Null}" ColumnName="Start Time" DataTable="[ExtractDataTable]" DisplayName="Sort Data Table by start time" sap:VirtualizedContainerService.HintSize="1096,112" sap2010:WorkflowViewState.IdRef="SortDataTable_1" Order="Ascending" OutputDataTable="[ExtractDataTable]" SortOrder="Ascending" />
-            <ueab:ExcelProcessScopeX DisplayAlerts="{x:Null}" ExistingProcessAction="{x:Null}" FileConflictResolution="{x:Null}" LaunchMethod="{x:Null}" LaunchTimeout="{x:Null}" MacroSettings="{x:Null}" ProcessMode="{x:Null}" DisplayName="Excel Process Scope" sap:VirtualizedContainerService.HintSize="1096,947" sap2010:WorkflowViewState.IdRef="ExcelProcessScopeX_4" ShowExcelWindow="False">
-              <ueab:ExcelProcessScopeX.Body>
-                <ActivityAction x:TypeArguments="ui:IExcelProcess">
-                  <ActivityAction.Argument>
-                    <DelegateInArgument x:TypeArguments="ui:IExcelProcess" Name="ExcelProcessScopeTag" />
-                  </ActivityAction.Argument>
-                  <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="592,835" sap2010:WorkflowViewState.IdRef="Sequence_13">
-                    <sap:WorkflowViewStateService.ViewState>
-                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                      </scg:Dictionary>
-                    </sap:WorkflowViewStateService.ViewState>
-                    <ueab:ExcelApplicationCard Password="{x:Null}" ReadFormatting="{x:Null}" DisplayName="Use Excel File" sap:VirtualizedContainerService.HintSize="530,750" sap2010:WorkflowViewState.IdRef="ExcelApplicationCard_2" ResizeWindow="None" WorkbookPath="C:\Users\Rich\Desktop\races.xlsx">
-                      <ueab:ExcelApplicationCard.Body>
-                        <ActivityAction x:TypeArguments="ue:IWorkbookQuickHandle">
-                          <ActivityAction.Argument>
-                            <DelegateInArgument x:TypeArguments="ue:IWorkbookQuickHandle" Name="Excel" />
-                          </ActivityAction.Argument>
-                          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="496,458" sap2010:WorkflowViewState.IdRef="Sequence_12">
-                            <sap:WorkflowViewStateService.ViewState>
-                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                              </scg:Dictionary>
-                            </sap:WorkflowViewStateService.ViewState>
-                            <Assign DisplayName="Assign - variable for the day" sap:VirtualizedContainerService.HintSize="434,114" sap2010:WorkflowViewState.IdRef="Assign_18">
-                              <Assign.To>
-                                <OutArgument x:TypeArguments="x:String">[TheDay]</OutArgument>
-                              </Assign.To>
-                              <Assign.Value>
-                                <InArgument x:TypeArguments="x:String">[DateTime.Today.ToString("dddd")]</InArgument>
-                              </Assign.Value>
-                            </Assign>
-                            <ueab:ClearRangeX DisplayName="Clear Sheet/Range/Table for today's data" HasHeaders="True" sap:VirtualizedContainerService.HintSize="434,148" sap2010:WorkflowViewState.IdRef="ClearRangeX_1" TargetRange="[Excel.Sheet(TheDay)]" />
-                            <ui:ExcelWriteRange AddHeaders="True" DataTable="[ExtractDataTable]" DisplayName="Write Range" sap:VirtualizedContainerService.HintSize="434,111" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_2" SheetName="[TheDay]" StartingCell="A1" />
-                          </Sequence>
-                        </ActivityAction>
-                      </ueab:ExcelApplicationCard.Body>
-                    </ueab:ExcelApplicationCard>
-                  </Sequence>
-                </ActivityAction>
-              </ueab:ExcelProcessScopeX.Body>
-            </ueab:ExcelProcessScopeX>
+            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="WriteTableToExcel.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="1096,138" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" Level="Info" LogEntry="OnlyInvocation" LogExit="OnlySuccessfulReturn" UnSafe="False" WorkflowFileName="WriteTableToExcel.xaml">
+              <ui:InvokeWorkflowFile.Arguments>
+                <InOutArgument x:TypeArguments="x:String" x:Key="io_TheDay" />
+                <InArgument x:TypeArguments="sd:DataTable" x:Key="in_dt_ExtractDataTable">[dt_ExtractDataTable]</InArgument>
+              </ui:InvokeWorkflowFile.Arguments>
+            </ui:InvokeWorkflowFile>
           </Sequence>
         </ActivityAction>
       </uix:NApplicationCard.Body>
