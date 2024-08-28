@@ -76,6 +76,8 @@
       <x:String>UiPath.IntegrationCore.Activities</x:String>
       <x:String>UiPath.BAF.Activities</x:String>
       <x:String>UiPath.BAF.Infrastructure.Contracts</x:String>
+      <x:String>UiPath.Mail.POP3.Activities</x:String>
+      <x:String>UiPath.Mail.Activities</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -152,6 +154,7 @@
       <AssemblyReference>UiPath.BAF.Infrastructure</AssemblyReference>
       <AssemblyReference>UiPath.HttpWebhook.IntegrationService.Activities</AssemblyReference>
       <AssemblyReference>UiPath.HttpWebhook.IntegrationService</AssemblyReference>
+      <AssemblyReference>UiPath.Mail.Activities.Design</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="Main Sequence" sap:VirtualizedContainerService.HintSize="1254,6283" sap2010:WorkflowViewState.IdRef="Sequence_1">
@@ -316,7 +319,7 @@
                                 <InArgument x:TypeArguments="x:Int32">[RaceCounter + 1]</InArgument>
                               </Assign.Value>
                             </Assign>
-                            <If Condition="[RaceRow.ItemArray.Contains(&quot;250 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;330 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;770 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;350 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;700 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;400 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;300 Y&quot;) OR RaceRow.Item(&quot;Race Type&quot;).ToString.Contains(&quot;Trials&quot;) OR RaceRow.Item(&quot;Surface&quot;).ToString.Contains(&quot;Hurdle&quot;) OR RaceRow.ItemArray.Contains(&quot;220 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;870 Y&quot;)]" DisplayName="If race is unbettable" sap:VirtualizedContainerService.HintSize="450,574" sap2010:WorkflowViewState.IdRef="If_15">
+                            <If Condition="[RaceRow.ItemArray.Contains(&quot;250 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;330 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;770 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;350 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;700 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;400 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;300 Y&quot;) OR RaceRow.Item(&quot;Race Type&quot;).ToString.Contains(&quot;Trials&quot;) OR RaceRow.Item(&quot;Surface&quot;).ToString.Contains(&quot;Hurdle&quot;) OR RaceRow.ItemArray.Contains(&quot;220 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;870 Y&quot;) OR RaceRow.Item(&quot;Race Type&quot;).ToString.Contains(&quot;Cancelled&quot;)]" DisplayName="If race is unbettable" sap:VirtualizedContainerService.HintSize="450,574" sap2010:WorkflowViewState.IdRef="If_15">
                               <If.Then>
                                 <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,301" sap2010:WorkflowViewState.IdRef="Sequence_66">
                                   <sap:WorkflowViewStateService.ViewState>
