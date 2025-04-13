@@ -86,6 +86,8 @@
       <AssemblyReference>System.Memory</AssemblyReference>
       <AssemblyReference>System.Private.Uri</AssemblyReference>
       <AssemblyReference>System.Linq.Expressions</AssemblyReference>
+      <AssemblyReference>System.Collections</AssemblyReference>
+      <AssemblyReference>System.Collections.NonGeneric</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="PrepareDataTable" sap:VirtualizedContainerService.HintSize="416,1256" sap2010:WorkflowViewState.IdRef="Sequence_1">
@@ -112,9 +114,9 @@
         </scg:List>
       </ui:FilterDataTable.SelectColumns>
     </ui:FilterDataTable>
-    <ui:AddDataColumn x:TypeArguments="x:String" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" DefaultValue="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="Races" DataTable="[io_dt_ExtractDataTable]" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="354,218" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_1" />
-    <ui:AddDataColumn x:TypeArguments="x:String" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" DefaultValue="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="Start Time" DataTable="[io_dt_ExtractDataTable]" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="354,218" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_2" />
-    <ui:AddDataColumn x:TypeArguments="x:String" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" DefaultValue="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="Turf" DataTable="[io_dt_ExtractDataTable]" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="354,218" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_3" />
-    <ui:AddDataColumn x:TypeArguments="x:String" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" DefaultValue="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="Unbettable" DataTable="[io_dt_ExtractDataTable]" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="354,209" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_4" />
+    <ui:AddDataColumn x:TypeArguments="x:String" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" ColumnName="Races" DataTable="[io_dt_ExtractDataTable]" DefaultValue="{x:Null}" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="354,218" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_1" MaxLength="{x:Null}" Unique="{x:Null}" />
+    <ui:AddDataColumn x:TypeArguments="x:String" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" ColumnName="Start Time" DataTable="[io_dt_ExtractDataTable]" DefaultValue="{x:Null}" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="354,218" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_2" MaxLength="{x:Null}" Unique="{x:Null}" />
+    <ui:AddDataColumn x:TypeArguments="x:String" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" ColumnName="Turf" DataTable="[io_dt_ExtractDataTable]" DefaultValue="{x:Null}" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="354,218" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_3" MaxLength="{x:Null}" Unique="{x:Null}" />
+    <ui:AddDataColumn x:TypeArguments="x:String" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" ColumnName="Unbettable" DataTable="[io_dt_ExtractDataTable]" DefaultValue="{x:Null}" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="354,209" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_4" MaxLength="{x:Null}" Unique="{x:Null}" />
   </Sequence>
 </Activity>

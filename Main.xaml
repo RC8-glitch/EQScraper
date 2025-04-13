@@ -319,7 +319,7 @@
                                 <InArgument x:TypeArguments="x:Int32">[RaceCounter + 1]</InArgument>
                               </Assign.Value>
                             </Assign>
-                            <If Condition="[RaceRow.ItemArray.Contains(&quot;250 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;330 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;770 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;350 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;700 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;400 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;300 Y&quot;) OR RaceRow.Item(&quot;Race Type&quot;).ToString.Contains(&quot;Trials&quot;) OR RaceRow.Item(&quot;Surface&quot;).ToString.Contains(&quot;Hurdle&quot;) OR RaceRow.ItemArray.Contains(&quot;220 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;870 Y&quot;) OR RaceRow.Item(&quot;Race Type&quot;).ToString.Contains(&quot;Cancelled&quot;)]" DisplayName="If race is unbettable" sap:VirtualizedContainerService.HintSize="450,574" sap2010:WorkflowViewState.IdRef="If_15">
+                            <If Condition="[RaceRow.ItemArray.Contains(&quot;250 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;330 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;770 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;350 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;700 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;400 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;300 Y&quot;) OR RaceRow.Item(&quot;Race Type&quot;).ToString.Contains(&quot;Trials&quot;) OR RaceRow.Item(&quot;Surface&quot;).ToString.Contains(&quot;Hurdle&quot;) OR RaceRow.ItemArray.Contains(&quot;220 Y&quot;) OR RaceRow.ItemArray.Contains(&quot;870 Y&quot;) OR RaceRow.Item(&quot;Race Type&quot;).ToString.Contains(&quot;Cancelled&quot;) OR RaceRow.Item(&quot;Race Type&quot;).ToString.Contains(&quot;Timber&quot;)]" DisplayName="If race is unbettable" sap:VirtualizedContainerService.HintSize="450,574" sap2010:WorkflowViewState.IdRef="If_15">
                               <If.Then>
                                 <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,301" sap2010:WorkflowViewState.IdRef="Sequence_66">
                                   <sap:WorkflowViewStateService.ViewState>
@@ -442,7 +442,7 @@
                 </ActivityAction>
               </ui:ForEachRow.Body>
             </ui:ForEachRow>
-            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="WriteTableToExcel.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="1096,138" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" Level="Info" LogEntry="OnlyInvocation" LogExit="OnlySuccessfulReturn" UnSafe="False" WorkflowFileName="WriteTableToExcel.xaml">
+            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="WriteTableToExcel.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="1096,138" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" Level="Trace" LogEntry="WithArguments" LogExit="WithArguments" UnSafe="False" WorkflowFileName="WriteTableToExcel.xaml">
               <ui:InvokeWorkflowFile.Arguments>
                 <InOutArgument x:TypeArguments="x:String" x:Key="io_TheDay" />
                 <InArgument x:TypeArguments="sd:DataTable" x:Key="in_dt_ExtractDataTable">[dt_ExtractDataTable]</InArgument>
